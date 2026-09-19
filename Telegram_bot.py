@@ -19,18 +19,36 @@ user_histories = {}
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text(
+    text = (
         "سلام 👋\n"
-        "من نکسوس هستم، دستیار شخصی هوشمند تو.\n\n"
-        "می‌تونی ازم بپرسی:\n"
-        "• ساعت چنده؟\n"
-        "• محاسبه ریاضی\n"
-        "• یادداشت و لیست کارها\n"
-        "• تولید رمز عبور\n"
-        "• تبدیل واحد\n"
-        "• خلاصه متن\n\n"
-        "هر چی خواستی بنویس 😊"
+        "من *نکسوس* هستم؛ دستیار شخصی هوشمند شما.\n\n"
+        "می‌توانم کمکتان کنم در:\n"
+        "• پاسخ به سوالات روزمره\n"
+        "• انجام محاسبات\n"
+        "• یادداشت‌برداری و مدیریت کارها\n"
+        "• تولید رمز عبور امن\n"
+        "• تبدیل واحدها\n"
+        "• خواندن و خلاصه‌سازی متن\n\n"
+        "فقط پیام خود را بنویسید.\n"
+        "برای راهنما: /help"
     )
+    await update.message.reply_text(text, parse_mode="Markdown")
+
+async def help_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    text = (
+        "📖 *راهنمای نکسوس*\n\n"
+        "مثال‌ها:\n"
+        "• ساعت چند است؟\n"
+        "• ۲۵۰ تقسیم بر ۵\n"
+        "• این را یادداشت کن: فردا جلسه دارم\n"
+        "• لیست کارها را نشان بده\n"
+        "• یک رمز ۱۶ کاراکتری بساز\n"
+        "• ۲۵ درجه سانتی‌گراد چند فارنهایت است؟\n\n"
+        "دستورها:\n"
+        "/start - شروع مجدد\n"
+        "/help - نمایش همین راهنما"
+    )
+    await update.message.reply_text(text, parse_mode="Markdown")
 
 
 async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -70,6 +88,7 @@ def main():
     app = Application.builder().token(TOKEN).build()
 
     app.add_handler(CommandHandler("start", start))
+    app.add_handler(CommandHandler("help", help_command))
     app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, handle_message))
 
     print("ربات نکسوس روشن شد...")
